@@ -9,7 +9,7 @@ const CounterMain = () => {
     <div>
       <div>CounterMain</div>
       <View count={count} />
-      <Controller count={count} setCount={setCount} />
+      <Controller setCount={setCount} />
     </div>
   );
 };

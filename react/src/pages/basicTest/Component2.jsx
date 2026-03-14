@@ -1,5 +1,9 @@
 import util_plus, { util_minus } from "./util";
 
+//props
+
+const lia = "hi";
+
 const Component2 = (props) => {
   const plusResult = propTestPlus(props);
   const minusResult = propTestMinus(props);
@@ -17,6 +21,7 @@ const Component2 = (props) => {
 };
 
 const propTestPlus = (props) => {
+  console.log(lia);
   const plus = util_plus(props.p1, props.p2);
   return plus;
 };

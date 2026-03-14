@@ -18,7 +18,11 @@ const BasicTestMain = () => {
       <Component1_1 />
       <Component1_2 />
       <Component1_3 />
-      <Component2 />
+      <div>---------------</div>
+      <div>---------------</div>
+      {/* 객체를 매개변수로 받아서 구조분해할당하는 것은 바닐라 스크립트에서도 가능하다
+      다만 화면단의 propertie를 바닐라 스크립트에서 받을수 있게한게 props일뿐이다. */}
+      <Component2 p1={10} p2={20} mp1={900} mp2={200} />
     </div>
   );
 };

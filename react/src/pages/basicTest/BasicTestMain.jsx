@@ -23,7 +23,7 @@ useRef
 값을 저장하지만 리렌더링을 하지않음. 내부로직용 변수나, dom에 접근해 특정 태그 조작 시 사용
 
 */
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 /*
 function BasicTestMain() {
@@ -51,6 +51,22 @@ const BasicTestMain = () => {
   const changeRefColor = () => {
     fontColor.current.style.color = "green";
   };
+
+  /*useEffect
+  리액트의 본분은 화면을 그리는 것. 그외에 화면 그리는 것과 직접 상관없는 작업들을 side Effect 부수효과
+  라고 부르며 이걸 useEffect가 처리. 주로 api호출 이벤트 리스너, 타이머, 외부라이브러리 연동에 쓰임
+  타이머나 이벤트 들록시 cleanup 함수 해야 메모리 낭비가 없음.
+  
+  두번째 인자가 없으면, 리렌더링 될때마다 실행 - 잘안씀
+
+  , [] - 두번째 인자로 빈배열을 넣으면, 컴포넌트가 화면에 처음 보일때 딱 한번 실행.
+  api 호출이나 초기설정 시 사용
+
+  배열에 값을 넣어주면 해당값이 변할때마다 실행
+  */
+  useEffect(() => {
+    console.log("useEffect 실행 타이밍");
+  }, [count]);
 
   return (
     <div>

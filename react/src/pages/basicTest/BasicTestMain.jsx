@@ -39,8 +39,13 @@ useReducer
 다만 dispatch를 통해 reduce함수를 실행가능하므로
 복잡한 처리가 필요하다면 useReducer, 필요없다면 state 를 쓰면 됨.
 
+useMemo
+어떤 복잡한 처리를 하는 함수를 바뀌는 것이 없는데도 리렌더링할때마다 실행한다는 것은
+메모리 낭비면서 동시에 복잡한 처리에 필요한 시간이 낭비된다는 것임
+따라서, 해당 값을 캐싱해서 값이 변경 되었을때만 계산을 하게 만드는 게 memo
+
 */
-import { useState, useRef, useEffect, useReducer } from "react";
+import { useState, useRef, useEffect, useReducer, useMemo } from "react";
 
 /*
 function BasicTestMain() {
@@ -92,6 +97,12 @@ const BasicTestMain = () => {
   //dispatch를 호출하면 state를 매개변수로 안넣어도 리액트가 자동으로 넣어줌
   const [state, dispatch] = useReducer(reducerFunc, { reducerCount: 0 });
 
+  //useMemo
+  const expensiveResult = useMemo(() => {
+    console.log("useMemo 엄청나게 복잡한 로직");
+    return count * 10;
+  }, [count]);
+
   return (
     <div>
       테스트메인
@@ -135,6 +146,7 @@ const BasicTestMain = () => {
       </div>
       <div>---------------</div>
       <div>---------------</div>
+      <div>memo연산 결과 : {expensiveResult}</div>
     </div>
   );
 };

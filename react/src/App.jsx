@@ -10,7 +10,7 @@ function App() {
       나의 첫 리액트 프로젝트
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/basic" element={<BasicTestMain />} />
+        <Route path="/basic/:id" element={<BasicTestMain />} />
         <Route path="/counter" element={<CounterMain />} />
       </Routes>
     </BrowserRouter>

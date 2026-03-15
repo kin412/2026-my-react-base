@@ -5,7 +5,7 @@ const Home = () => {
     <div>
       <div>홈입니다.</div>
       <div>
-        <Link to="/basic">BasicTestMain</Link>
+        <Link to="/basic/999999?qs=react&page=412">BasicTestMain</Link>
       </div>
       <div>
         <Link to="/counter">CounterMain</Link>

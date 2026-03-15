@@ -90,6 +90,12 @@ useNavigate
 Link - 스프링프로젝트에서 그냥 화면단의 a태그라 보면 된다. 
 useNavigate - Link는 클릭해야 하지만, useNavigate는 특정 로직의 끝에서 그 요청으로 바로간다.
 
+useParams
+스프링의 @PathVariable
+
+useSearchParams
+스프링의 쿼리스트링
+
 */
 import {
   useState,
@@ -101,7 +107,12 @@ import {
   createContext,
 } from "react";
 import MiddleComponent from "./MiddleComponent";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 /*
 function BasicTestMain() {
@@ -185,6 +196,20 @@ const BasicTestMain = () => {
     nvg("/");
   };
 
+  //useParams
+  const { id } = useParams();
+
+  //useSearchParams
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const qs = searchParams.get("qs");
+  const page = searchParams.get("page");
+
+  const changeQuery = () => {
+    // 코드로 쿼리 스트링 변경 (주소창이 /basic?qs=vue&page=2 로 바뀜)
+    setSearchParams({ qs: "vue", page: "2" });
+  };
+
   return (
     <div>
       테스트메인
@@ -244,6 +269,17 @@ const BasicTestMain = () => {
         {/* 중간단계는 props 전달 안함 */}
         <MiddleComponent />
       </FirstContext.Provider>
+      <div>---------------</div>
+      <div>---------------</div>
+      <div>useParams id= {id}</div>
+      <div>---------------</div>
+      <div>---------------</div>
+      <div>useSearchParams</div>
+      <div>qs = {qs}</div>
+      <div>page = {page}</div>
+      <div>
+        <button onClick={changeQuery}>쿼리스트링 변경</button>
+      </div>
     </div>
   );
 };

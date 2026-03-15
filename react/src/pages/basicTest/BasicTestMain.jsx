@@ -80,6 +80,16 @@ props는 부모의 데이터를 자식에게 넘길때 유용하다.
 props으로 계속 넘겨야할까? 이건 매우 귀찮다 이문제를 props drilling 이라고 한다.
 이런 경우 context를 쓰면 드릴링 하지않고 바로 원하는 자식에게 넘길수 있다.
 
+Router
+주소에 맞는 컴포넌트를 화면에 갈아끼워줌.
+컨트롤러와 비슷함.
+단 이녀석은 app.jsx에 딱 한개만 둠.
+
+useNavigate
+페이지 이동이다. Link와 다른점은 다음과 같다.
+Link - 스프링프로젝트에서 그냥 화면단의 a태그라 보면 된다. 
+useNavigate - Link는 클릭해야 하지만, useNavigate는 특정 로직의 끝에서 그 요청으로 바로간다.
+
 */
 import {
   useState,
@@ -91,6 +101,7 @@ import {
   createContext,
 } from "react";
 import MiddleComponent from "./MiddleComponent";
+import { Link, useNavigate } from "react-router-dom";
 
 /*
 function BasicTestMain() {
@@ -166,9 +177,21 @@ const BasicTestMain = () => {
   //context
   const [user, setUser] = useState("kin");
 
+  //useNavigate
+  const nvg = useNavigate();
+
+  const navi = () => {
+    console.log("지루하고 현학적인 로직");
+    nvg("/");
+  };
+
   return (
     <div>
       테스트메인
+      <div>
+        {/* <Link to="/">홈으로</Link> */}
+        <button onClick={navi}>홈으로</button>
+      </div>
       <DefaultCom1 />
       <Component1_1 />
       <Component1_2 />

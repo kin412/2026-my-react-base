@@ -74,6 +74,12 @@ custom hook은 안에 여러가지 내장 훅들을 가질 수 있다.
 그 내장 훅들 마다 독립적인 상태 저장소를 가지므로,
 custom hook은 여러개의 상태 저장소를 가질수 있다.
 
+Context
+props는 부모의 데이터를 자식에게 넘길때 유용하다.
+하지만 부모가 자식의 자식의 자식의 자식의 자식에게 넘겨야할 데이터가 있을땐 어떻게 해야할까?
+props으로 계속 넘겨야할까? 이건 매우 귀찮다 이문제를 props drilling 이라고 한다.
+이런 경우 context를 쓰면 드릴링 하지않고 바로 원하는 자식에게 넘길수 있다.
+
 */
 import {
   useState,
@@ -82,7 +88,9 @@ import {
   useReducer,
   useMemo,
   useCallback,
+  createContext,
 } from "react";
+import MiddleComponent from "./MiddleComponent";
 
 /*
 function BasicTestMain() {
@@ -100,6 +108,9 @@ function BasicTestMain() {
 //     </div>
 //   );
 // };
+
+//context
+export const FirstContext = createContext();
 
 //reducer
 const reducerFunc = (state, action) => {
@@ -152,6 +163,9 @@ const BasicTestMain = () => {
     return { me: text };
   }, []);
 
+  //context
+  const [user, setUser] = useState("kin");
+
   return (
     <div>
       테스트메인
@@ -200,6 +214,13 @@ const BasicTestMain = () => {
       <div>---------------</div>
       {/* <ReactMemoComponent name={useCallbackTest()} /> */}
       <ReactMemoComponent name={useCallbackTest} />
+      <div>---------------</div>
+      <div>---------------</div>
+      <div>context</div>
+      <FirstContext.Provider value={user}>
+        {/* 중간단계는 props 전달 안함 */}
+        <MiddleComponent />
+      </FirstContext.Provider>
     </div>
   );
 };

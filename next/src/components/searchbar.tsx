@@ -36,6 +36,12 @@ export default function Search() {
     router.push(`/board`);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSearch();
+    }
+  };
+
   return (
     <div>
       <div>
@@ -44,12 +50,14 @@ export default function Search() {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={onKeyDown}
         />
         작성자
         <input
           type="text"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
+          onKeyDown={onKeyDown}
         />
         <button onClick={onSearch}>검색</button>
         <button onClick={onInit} style={{ marginLeft: "10px" }}>

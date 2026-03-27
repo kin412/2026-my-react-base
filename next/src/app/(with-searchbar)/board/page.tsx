@@ -1,33 +1,18 @@
 import BoardItem from "@/components/board-item";
 import Search from "@/components/searchbar";
 import SearchResult from "@/components/searchResult";
+import { boardService } from "@/services/board-service";
 import { BoardData } from "@/types";
 
-async function BoardList() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/api/v1/boards`,
-    {
-      cache: "force-cache", //캐시는 계속함
-      next: { tags: ["board"] },
-    }, //온 디맨드. board라는 이름을 붙임. 글작성, 수정 시 revalidateTag
-  );
-  if (!response.ok) {
-    return <div>조회중 오류 발생..</div>;
-  }
-  const result = await response.json();
-  const { content } = result.data;
-  console.log(result);
-  console.log("---------------------");
-  console.log(content);
-  const boards: BoardData[] = content;
-  return (
-    <div>
-      {boards.map((board) => (
-        <BoardItem key={board.id} {...board} />
-      ))}
-    </div>
-  );
-}
+// async function BoardList() {
+//   return (
+//     <div>
+//       {boards.map((board) => (
+//         <BoardItem key={board.id} {...board} />
+//       ))}
+//     </div>
+//   );
+// }
 
 export default async function Page({
   searchParams,
@@ -36,8 +21,10 @@ export default async function Page({
 }) {
   const { title, author } = await searchParams;
 
+  const boards = await boardService.getBoards({ title, author });
+
   //검색어가 하나라도 있는지 확인
-  const isSearching = !!(title || author);
+  //const isSearching = !!(title || author);
 
   return (
     <div>
@@ -47,7 +34,12 @@ export default async function Page({
       <div>author : {author}</div>
       <Search />
       {/* 검색어가 있으면 검색 결과 페이지를, 아니면 기본 리스트를 보여줌 */}
-      {isSearching ? <SearchResult cond={{ title, author }} /> : <BoardList />}
+      {/* {isSearching ? <SearchResult cond={{ title, author }} /> : <BoardList />} */}
+      {boards.length > 0 ? (
+        boards.map((board) => <BoardItem key={board.id} {...board} />)
+      ) : (
+        <div>조회된 데이터가 없습니다.</div>
+      )}
     </div>
   );
 }

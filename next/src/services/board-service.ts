@@ -35,4 +35,22 @@ export const boardService = {
 
     return result.data.content;
   },
+
+  async getBoardDetail(id: string) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_SERVER_URL}/api/v1/boards/${id}`,
+      {
+        cache: "force-cache",
+        next: { tags: [`board/${id}`] },
+      },
+    );
+    if (!response.ok) {
+      console.log("response.status : ", response.status);
+      console.log("response.statusText : ", response.statusText);
+      throw new Error("게시글 조회중 오류가 발생했습니다.");
+    }
+    const result = await response.json();
+
+    return result.data;
+  },
 };

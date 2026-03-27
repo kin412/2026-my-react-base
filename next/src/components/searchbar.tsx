@@ -21,6 +21,7 @@ export default function Search() {
   }, [searchParams]);
 
   const onSearch = () => {
+    //값이 있을때만 파라미터에 추가
     if (title) params.set("title", title);
     if (author) params.set("author", author);
 
